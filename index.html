@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-55Q5WES7B1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-55Q5WES7B1');
+    </script>
+    <script>
+      document.addEventListener('click', function (e) {
+        var link = e.target.closest('a');
+        if (!link || !link.href) return;
+        var href = link.href;
+        var eventName = null;
+        var linkType = null;
+        if (href.indexOf('buymeacoffee.com') !== -1) {
+          eventName = 'click_bmc';
+          linkType = 'bmc';
+        } else if (href.indexOf('/issues') !== -1) {
+          eventName = 'click_support';
+          linkType = 'github_issues';
+        } else if (href.indexOf('github.com') !== -1) {
+          eventName = 'click_github';
+          linkType = 'github';
+        } else if (href.indexOf('addons.thunderbird.net') !== -1) {
+          eventName = 'click_community';
+          linkType = 'thunderbird_atn';
+        }
+        if (!eventName) return;
+        gtag('event', eventName, {
+          link_url: href,
+          link_text: (link.textContent || '').trim().slice(0, 100),
+          link_type: linkType
+        });
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail Note Copy | Thunderbird のメールを Obsidian の Markdown に</title>
+    <meta name="description" content="Mail Note Copy は Thunderbird アドオン。メールを日付_件名.md として保存し、プロパティ・本文・添付を残します。保存先のパスを見てから選べ、固定フォルダで別 Vault にも送れます。">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="K-Tech Studio">
+    <meta name="theme-color" content="#0060DF">
+    <link rel="canonical" href="https://mail-note-copy-lp.vercel.app/">
+    <link rel="alternate" hreflang="ja" href="https://mail-note-copy-lp.vercel.app/">
+    <link rel="alternate" hreflang="en" href="https://mail-note-copy-lp.vercel.app/">
+    <link rel="alternate" hreflang="x-default" href="https://mail-note-copy-lp.vercel.app/">
+    <link rel="sitemap" type="application/xml" href="https://mail-note-copy-lp.vercel.app/sitemap.xml">
+    <meta property="og:site_name" content="K-Tech Studio">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mail Note Copy | Thunderbird → Obsidian Markdown">
+    <meta property="og:description" content="Save a Thunderbird message as a Markdown note with YAML properties, body, and attachments. Pick a visible destination, including other vaults.">
+    <meta property="og:url" content="https://mail-note-copy-lp.vercel.app/">
+    <meta property="og:image" content="https://mail-note-copy-lp.vercel.app/images/icon.png">
+    <meta property="og:image:alt" content="Mail Note Copy">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@K_Tech_Dev">
+    <meta name="twitter:title" content="Mail Note Copy | Thunderbird → Obsidian Markdown">
+    <meta name="twitter:description" content="Copy mail into Obsidian as Markdown with properties, body, and attachments. Choose the folder first.">
+    <meta name="twitter:image" content="https://mail-note-copy-lp.vercel.app/images/icon.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://k-tech-lab.vercel.app/#organization",
+          "name": "K-Tech Studio",
+          "url": "https://k-tech-lab.vercel.app/",
+          "sameAs": ["https://github.com/crossbeat461-a11y/mail-note-copy", "https://x.com/K_Tech_Dev", "https://note.com/ktech_dev"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://mail-note-copy-lp.vercel.app/#website",
+          "url": "https://mail-note-copy-lp.vercel.app/",
+          "name": "Mail Note Copy",
+          "inLanguage": "ja",
+          "publisher": { "@id": "https://k-tech-lab.vercel.app/#organization" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://mail-note-copy-lp.vercel.app/#app",
+          "name": "Mail Note Copy",
+          "url": "https://mail-note-copy-lp.vercel.app/",
+          "image": "https://mail-note-copy-lp.vercel.app/images/icon.png",
+          "description": "Thunderbird add-on that saves a message as an Obsidian Markdown note with YAML properties, body, and attachments.",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Thunderbird",
+          "softwareVersion": "1.0.0",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+          "downloadUrl": "https://addons.thunderbird.net/ja/thunderbird/search/?q=Mail+Note+Copy",
+          "author": { "@id": "https://k-tech-lab.vercel.app/#organization" }
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" href="favicon.png" type="image/png">
+
+    <style>
+        :root {
+            --tb-blue: #0060DF;
+            --tb-blue-deep: #003EAA;
+            --tb-blue-bright: #4090FF;
+            --tb-blue-soft: #E7F0FF;
+            --tb-blue-glow: #C5D9FF;
+            --tb-nav: #0F2847;
+            --tb-nav-hover: #1A3A5C;
+            --tb-chrome: #E8EEF7;
+            --tb-folder: #F0F4FA;
+            --tb-pane: #FFFFFF;
+            --tb-selected: #D7E8FF;
+            --tb-line: #C8D4E8;
+            --tb-text: #0F1729;
+            --tb-muted: #4A5872;
+            --bg-base: #F2F6FC;
+            --white: #ffffff;
+            --obs: #7c3aed;
+            --obs-soft: #F5F3FF;
+            --obs-line: #DDD6FE;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: "Segoe UI", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+            color: var(--tb-text);
+            background: var(--bg-base);
+            line-height: 1.6;
+        }
+        .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+        a { color: var(--tb-blue); }
+        html:not([lang="en"]) .lang-en { display: none !important; }
+        html[lang="en"] .lang-ja { display: none !important; }
+        html[lang="en"] .lang-en { display: block; }
+        html[lang="en"] span.lang-en { display: inline !important; }
+        html[lang="en"] a.lang-en { display: inline-block !important; }
+        html[lang="en"] img.lang-en,
+        html[lang="en"] pre.lang-en { display: block !important; }
+
+        .lang-switch {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 20;
+            display: flex;
+            gap: 4px;
+            background: var(--white);
+            border: 1px solid var(--tb-line);
+            border-radius: 8px;
+            padding: 4px;
+        }
+        .lang-btn {
+            border: 0;
+            background: transparent;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--tb-muted);
+        }
+        .lang-btn.active { background: var(--tb-nav); color: #fff; }
+
+        .hero {
+            padding: 88px 0 56px;
+            background: linear-gradient(180deg, #E7F0FF 0%, var(--bg-base) 100%);
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.05fr;
+            gap: 36px;
+            align-items: center;
+        }
+        .brand-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .brand-row img {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+        }
+        .soon-badge {
+            display: inline-block;
+            background: #ffdd00;
+            color: #1a1a1a;
+            border: 1px solid #e0c200;
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+        .addon-badge {
+            display: inline-block;
+            background: var(--obs-soft);
+            color: var(--obs);
+            border: 1px solid var(--obs-line);
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .hero-copy h1 {
+            margin: 12px 0 12px;
+            font-size: 2.35rem;
+            line-height: 1.25;
+        }
+        .hero-copy > p {
+            color: var(--tb-muted);
+            font-size: 1.05rem;
+            max-width: 36rem;
+        }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+        .btn-primary, .btn-secondary, .btn-download {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        .btn-primary {
+            background: var(--tb-blue);
+            color: #fff;
+        }
+        .btn-primary:hover { background: var(--tb-blue-deep); }
+        .btn-secondary {
+            background: var(--white);
+            color: var(--tb-nav);
+            border: 1px solid var(--tb-line);
+        }
+
+        .tb-window {
+            background: var(--white);
+            border: 1px solid var(--tb-line);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 18px 40px rgba(15, 40, 71, 0.08);
+        }
+        .tb-titlebar {
+            background: var(--tb-nav);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+        }
+        .tb-dots { display: flex; gap: 5px; }
+        .tb-dots i {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #6b7c94; display: block;
+        }
+        .tb-tab {
+            background: var(--tb-nav-hover);
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+        .tb-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 280px;
+        }
+        .tb-threads { background: var(--tb-folder); padding: 8px; }
+        .thread {
+            display: grid;
+            grid-template-columns: 22px 1fr auto;
+            gap: 8px;
+            padding: 9px 8px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            color: var(--tb-muted);
+        }
+        .thread.selected {
+            background: var(--tb-selected);
+            color: var(--tb-text);
+            font-weight: 600;
+        }
+        .thread .sub { display: block; font-weight: 400; color: var(--tb-muted); font-size: 0.75rem; }
+        .tb-addon {
+            padding: 12px;
+            background: var(--obs-soft);
+        }
+        .addon-head {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--obs);
+            margin-bottom: 8px;
+        }
+        .dest-row {
+            background: #fff;
+            border: 1px solid var(--obs-line);
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            font-size: 0.78rem;
+        }
+        .dest-row strong { display: block; }
+        .dest-row code {
+            color: var(--tb-muted);
+            font-size: 0.7rem;
+        }
+        .dest-row.active { outline: 2px solid var(--obs); }
+        .tb-save {
+            width: 100%;
+            margin-top: 6px;
+            border: 0;
+            background: var(--obs);
+            color: #fff;
+            padding: 9px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        section { padding: 56px 0; }
+        .section-title { font-size: 1.7rem; margin: 0 0 10px; }
+        .section-lead { color: var(--tb-muted); max-width: 46rem; margin: 0 0 28px; }
+        .feature-grid, .use-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .feature-card, .use-card {
+            background: var(--white);
+            border: 1px solid var(--tb-line);
+            border-radius: 12px;
+            padding: 22px;
+        }
+        .feature-icon {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            background: var(--obs-soft);
+            color: var(--obs);
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .feature-card h3, .use-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+        .feature-card p, .use-card p { margin: 0; color: var(--tb-muted); font-size: 0.92rem; }
+
+        .figure {
+            background: var(--white);
+            border: 1px solid var(--tb-line);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0 8px;
+        }
+        .figure img { width: 100%; height: auto; display: block; }
+        .figure figcaption {
+            margin-top: 10px;
+            color: var(--tb-muted);
+            font-size: 0.85rem;
+        }
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .howto ol { padding-left: 1.2rem; color: var(--tb-muted); }
+        .howto li { margin-bottom: 10px; }
+        .howto li strong { color: var(--tb-nav); }
+        .kbd, .search-kbd {
+            display: inline-block;
+            background: var(--white);
+            border: 1px solid var(--tb-line);
+            border-radius: 6px;
+            padding: 1px 8px;
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+        code.prop {
+            background: var(--obs-soft);
+            color: var(--obs);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .props {
+            background: #1e1b2e;
+            color: #e9e4ff;
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-family: Consolas, "Cascadia Mono", monospace;
+            font-size: 0.82rem;
+            overflow-x: auto;
+        }
+        .props .k { color: #c4b5fd; }
+
+        .install-section {
+            background: var(--white);
+            border-top: 1px solid var(--tb-line);
+            border-bottom: 1px solid var(--tb-line);
+        }
+        .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .install-card {
+            border: 1px solid var(--tb-line);
+            border-radius: 12px;
+            padding: 28px 24px;
+            background: var(--bg-base);
+        }
+        .install-card-primary {
+            background: linear-gradient(145deg, var(--tb-nav) 0%, #1A4478 100%);
+            color: #fff;
+            border: none;
+        }
+        .install-card-primary p,
+        .install-card-primary .install-note { color: #C5D9FF; }
+        .install-card h3 { margin: 0 0 12px; }
+        .install-card p { margin: 0 0 16px; font-size: 0.92rem; }
+        .install-card ol { margin: 0; padding-left: 1.25rem; color: var(--tb-muted); font-size: 0.92rem; }
+        .install-card-primary ol { color: #E7F0FF; }
+        .install-card-primary li strong { color: #fff; }
+        .btn-download { background: var(--tb-blue-bright); color: var(--tb-nav); }
+        .install-card:not(.install-card-primary) .btn-download {
+            background: var(--tb-blue); color: #fff;
+        }
+        .install-note { margin-top: 14px; font-size: 0.82rem; }
+
+        .faq details {
+            background: var(--white);
+            border: 1px solid var(--tb-line);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+        }
+        .faq summary { cursor: pointer; font-weight: 700; }
+
+        .cta-area {
+            background: var(--tb-nav);
+            color: #fff;
+            padding: 40px 32px;
+            border-radius: 12px;
+            text-align: center;
+            border-top: 4px solid var(--obs);
+        }
+        .cta-area p { margin: 0; color: #C5D9FF; }
+
+        footer {
+            padding: 48px 0;
+            text-align: center;
+            border-top: 1px solid var(--tb-line);
+            color: var(--tb-muted);
+            font-size: 0.9rem;
+        }
+        .sns-icon { color: var(--tb-nav); text-decoration: none; font-weight: 700; margin: 0 10px; }
+        .bmc-img { height: 56px; width: auto; margin: 8px 0 4px; }
+        .btn-inline {
+            background: none; border: none; color: var(--tb-muted);
+            text-decoration: underline; cursor: pointer; font-size: 0.85rem;
+        }
+        #policy-box {
+            display: none;
+            text-align: left;
+            background: var(--white);
+            padding: 32px;
+            border-radius: 8px;
+            margin-top: 24px;
+            border: 1px solid var(--tb-line);
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid, .split, .feature-grid, .use-grid, .install-grid { grid-template-columns: 1fr; }
+            .hero-copy h1 { font-size: 2rem; }
+            .tb-body { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <button type="button" onclick="setLang('ja')" id="btn-ja" class="lang-btn active">JP</button>
+        <button type="button" onclick="setLang('en')" id="btn-en" class="lang-btn">EN</button>
+    </div>
+
+    <header class="hero">
+        <div class="container hero-grid">
+            <div class="hero-copy">
+                <div class="brand-row">
+                    <img src="images/icon.png" alt="Mail Note Copy">
+                    <span class="soon-badge">Coming soon</span>
+                    <span class="addon-badge">Thunderbird Add-on · v1.0.0</span>
+                </div>
+                <h1>Mail Note Copy</h1>
+                <p class="lang-ja">メールを Obsidian の Markdown ノートとして保存します。プロパティに差出人・宛先・件名を残し、本文と添付も同じフォルダへ。保存先のパスを見てから選べます。固定フォルダを置けば、別の Vault にも送れます。</p>
+                <p class="lang-en">Save a Thunderbird message as an Obsidian Markdown note. Properties keep from, to, and subject. The body and attachments land in the same folder. You see the path before you save, and pinned folders can point at other vaults.</p>
+                <div class="hero-actions">
+                    <a class="btn-primary lang-ja" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">GitHub を見る</a>
+                    <a class="btn-primary lang-en" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                    <a class="btn-secondary" href="#install">
+                        <span class="lang-ja">公開後の入れ方</span>
+                        <span class="lang-en">How to install later</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tb-window" aria-hidden="true">
+                <div class="tb-titlebar">
+                    <span class="tb-dots"><i></i><i></i><i></i></span>
+                    <span class="tb-tab">Inbox — Thunderbird</span>
+                    <span class="lang-ja">1 通を選んで保存先を見る</span>
+                    <span class="lang-en">Pick 1 message, then see the path</span>
+                </div>
+                <div class="tb-body">
+                    <div class="tb-threads">
+                        <div class="thread selected unread">
+                            <span>🖇</span>
+                            <span><span class="lang-ja">健康診断予定表</span><span class="lang-en">Health check schedule</span><span class="sub">hr@example.com</span></span>
+                            <span>9:15</span>
+                        </div>
+                        <div class="thread">
+                            <span></span>
+                            <span><span class="lang-ja">打ち合わせ日程</span><span class="lang-en">Meeting time</span><span class="sub">team@example.com</span></span>
+                            <span>昨日</span>
+                        </div>
+                        <div class="thread">
+                            <span>🖇</span>
+                            <span><span class="lang-ja">見積書のご送付</span><span class="lang-en">Quote attached</span><span class="sub">sales@example.com</span></span>
+                            <span>月</span>
+                        </div>
+                    </div>
+                    <aside class="tb-addon">
+                        <div class="addon-head">Mail Note Copy</div>
+                        <div class="dest-row active">
+                            <strong class="lang-ja">仕事 Vault / Inbox</strong>
+                            <strong class="lang-en">Work vault / Inbox</strong>
+                            <code>C:\Notes\Work\Inbox</code>
+                        </div>
+                        <div class="dest-row">
+                            <strong class="lang-ja">プライベート Vault</strong>
+                            <strong class="lang-en">Personal vault</strong>
+                            <code>D:\Obsidian\Personal\Mail</code>
+                        </div>
+                        <div class="dest-row">
+                            <strong class="lang-ja">今開いている場所</strong>
+                            <strong class="lang-en">Current Obsidian folder</strong>
+                            <code>C:\Notes\Work\Daily</code>
+                        </div>
+                        <button type="button" class="tb-save" tabindex="-1">
+                            <span class="lang-ja">この場所に保存</span>
+                            <span class="lang-en">Save here</span>
+                        </button>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-ja">メール 1 通が、そのまま 1 ノートになる</span>
+                <span class="lang-en">One message becomes one note</span>
+            </h2>
+            <p class="section-lead lang-ja">クリップボードに本文だけ残して、あとで貼る作業ではありません。ファイル名は <code>日付_件名.md</code>。プロパティに各情報を書き、本文を Markdown にし、添付ファイルも置きます。</p>
+            <p class="section-lead lang-en">This is not a clipboard-only workflow. The filename is <code>date_subject.md</code>. Properties store the headers, the body becomes Markdown, and attachment files are written there too.</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">MD</div>
+                    <div class="lang-ja">
+                        <h3>プロパティ付きの Markdown</h3>
+                        <p>date / from / to / cc / bcc / subject / attachments / message-id を YAML に残します。Obsidian のプロパティとして検索できます。</p>
+                    </div>
+                    <div class="lang-en">
+                        <h3>Markdown with properties</h3>
+                        <p>YAML keeps date, from, to, cc, bcc, subject, attachments, and message-id so Obsidian can search them.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📎</div>
+                    <div class="lang-ja">
+                        <h3>本文と添付を一緒に</h3>
+                        <p>ノートの下に添付へのウィキリンクを置きます。Excel や PDF も、ノートと同じフォルダに実ファイルとして保存します。</p>
+                    </div>
+                    <div class="lang-en">
+                        <h3>Body plus attachments</h3>
+                        <p>The note gets wiki-links to attachments. Excel, PDF, and other files are written next to the note.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <div class="lang-ja">
+                        <h3>保存先を見てから選ぶ</h3>
+                        <p>今開いている Vault、最近使った場所、固定したフォルダ。パスが見えるので、別 Vault にも迷わず送れます。</p>
+                    </div>
+                    <div class="lang-en">
+                        <h3>See the path, then choose</h3>
+                        <p>Current Obsidian folder, recents, and pins. Paths stay visible, so other vaults are first-class destinations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-ja">使い方は簡単。3つのSTEP</span>
+                <span class="lang-en">Three steps</span>
+            </h2>
+            <figure class="figure">
+                <img class="lang-ja" src="images/flow-ja.png" width="920" height="220" alt="Thunderbird から保存先を見て Obsidian へ">
+                <img class="lang-en" src="images/flow-en.png" width="920" height="220" alt="Thunderbird to destination to Obsidian">
+                <figcaption class="lang-ja">メール選択 → 保存ダイアログで保存先を決める → 日付と件名のノートと添付ファイル（指定した場合）が Vault内の指定したフォルダに保存</figcaption>
+                <figcaption class="lang-en">Select a message → choose a folder in the save dialog → a date-and-subject note and attachments (if you asked for them) are saved in that folder in the vault</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section>
+        <div class="container split">
+            <div>
+                <h2 class="section-title">
+                    <span class="lang-ja">保存先は複数。Vault も複数。</span>
+                    <span class="lang-en">Several destinations. Several vaults.</span>
+                </h2>
+                <div class="lang-ja">
+                    <p class="section-lead">仕事用と個人用で Vault が分かれていても、設定にフルパスを指定できます。保存のたびに深いフォルダを辿り直す煩わしさはありません。</p>
+                    <ul>
+                        <li><strong>固定フォルダ</strong>（最大 16）… よく使う Inbox や Mail フォルダ。名前を付けて並べ替えできます。</li>
+                        <li><strong>今開いている場所</strong>… Obsidian が最後に見ていたフォルダを検出します。</li>
+                        <li><strong>最近使った場所</strong>（最大 8）… さっき保存したフォルダが残ります。</li>
+                        <li><strong>参照して選ぶ</strong>… その場で別のフォルダを指定できます。</li>
+                    </ul>
+                    <p>固定フォルダはオプションです。最初は最近使った場所だけでも使えます。メニューの「保存先を管理…」から追加・改名・削除できます。</p>
+                </div>
+                <div class="lang-en">
+                    <p class="section-lead">Work and personal vaults can each have a full path in settings. You do not have to walk a deep tree every time you save.</p>
+                    <ul>
+                        <li><strong>Pinned folders</strong> (up to 16) — Inbox or Mail folders you reuse, with your own labels.</li>
+                        <li><strong>Current folder</strong> — the folder Obsidian last had open.</li>
+                        <li><strong>Recents</strong> (up to 8) — the last places you saved to.</li>
+                        <li><strong>Browse</strong> — pick any other folder on the spot.</li>
+                    </ul>
+                    <p>Pins are optional. Recents are enough to start. Add, rename, or remove pins from “Manage destinations…”.</p>
+                </div>
+            </div>
+            <figure class="figure">
+                <img class="lang-ja" src="images/dest-ja.png" width="420" height="380" alt="保存先ピッカー">
+                <img class="lang-en" src="images/dest-en.png" width="420" height="380" alt="Destination picker">
+                <figcaption class="lang-ja">パスがそのまま見えるので、どの Vault に入るか迷いません。</figcaption>
+                <figcaption class="lang-en">The full path stays visible, so you know which vault you are writing to.</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section>
+        <div class="container split">
+            <figure class="figure">
+                <img class="lang-ja" src="images/properties-ja.png" width="560" height="360" alt="Obsidian のプロパティ">
+                <img class="lang-en" src="images/properties-en.png" width="560" height="360" alt="Obsidian properties">
+                <figcaption class="lang-ja">ノート先頭の YAML が、Obsidian のプロパティになります。</figcaption>
+                <figcaption class="lang-en">The YAML front matter becomes Obsidian properties.</figcaption>
+            </figure>
+            <div>
+                <h2 class="section-title">
+                    <span class="lang-ja">プロパティに残る情報</span>
+                    <span class="lang-en">What the properties keep</span>
+                </h2>
+                <p class="section-lead lang-ja">ファイル名は <code>YYYY-MM-DD_件名.md</code> です。Re: や Fwd: は外します。本文は HTML なら Markdown に直し、なければプレーンテキストを使います。</p>
+                <p class="section-lead lang-en">The filename is <code>YYYY-MM-DD_subject.md</code>. Re: and Fwd: are stripped. HTML bodies become Markdown; otherwise the plain text is used.</p>
+                <pre class="props lang-ja"><span class="k">date</span>: 2026-10-21T09:15:00+09:00
+<span class="k">from</span>: hr@example.com
+<span class="k">to</span>:
+  - me@example.com
+<span class="k">cc</span>:
+  - team@example.com
+<span class="k">bcc</span>: []
+<span class="k">subject</span>: 健康診断予定表
+<span class="k">has_attachments</span>: true
+<span class="k">attachments</span>:
+  - 健康診断予定表.xlsx
+<span class="k">message-id</span>: &lt;abc@example.com&gt;</pre>
+                <pre class="props lang-en"><span class="k">date</span>: 2026-10-21T09:15:00+09:00
+<span class="k">from</span>: hr@example.com
+<span class="k">to</span>:
+  - me@example.com
+<span class="k">cc</span>:
+  - team@example.com
+<span class="k">bcc</span>: []
+<span class="k">subject</span>: Health check schedule
+<span class="k">has_attachments</span>: true
+<span class="k">attachments</span>:
+  - Health-check-schedule.xlsx
+<span class="k">message-id</span>: &lt;abc@example.com&gt;</pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-ja">使い方</span>
+                <span class="lang-en">How to use it</span>
+            </h2>
+            <div class="use-grid howto">
+                <div class="use-card lang-ja">
+                    <h3>1. メールを 1 通選ぶ</h3>
+                    <p>一覧または表示中のメールで右クリックします。いまは先頭の 1 通だけを保存します。複数選択の一括保存はこれから対応予定です。</p>
+                </div>
+                <div class="use-card lang-en">
+                    <h3>1. Select one message</h3>
+                    <p>Right-click in the list or the open message. Version 1.0.0 saves the first selected message. Bulk save is planned.</p>
+                </div>
+                <div class="use-card lang-ja">
+                    <h3>2. メニューを選ぶ</h3>
+                    <p><span class="kbd">本文をコピー</span>はクリップボードへ。<span class="kbd">保存先を選んで保存</span>はノートだけ。<span class="kbd">添付も保存</span>は同じフォルダに添付ファイルも保存します。</p>
+                </div>
+                <div class="use-card lang-en">
+                    <h3>2. Pick a menu</h3>
+                    <p><span class="kbd">Copy body</span> goes to the clipboard. <span class="kbd">Save with destination</span> writes the note. <span class="kbd">Save with attachments</span> also saves the attachment files in the same folder.</p>
+                </div>
+                <div class="use-card lang-ja">
+                    <h3>3. 保存ダイアログを見て保存する</h3>
+                    <p>固定・今の場所・最近・参照の順に並びます。選んだフォルダに <code>日付_件名.md</code> ができ、添付メニューならファイルと <code>## 添付</code> のリンクが付きます。一度設定すると次から自動表示されています。</p>
+                </div>
+                <div class="use-card lang-en">
+                    <h3>3. See the save dialog, then save</h3>
+                    <p>Pins, current folder, recents, then browse. The note is <code>date_subject.md</code>. Attachment mode adds files and a <code>## Attachments</code> list. After you set them once, they show up automatically next time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-ja">もう少し詳しく</span>
+                <span class="lang-en">A bit more detail</span>
+            </h2>
+            <div class="feature-grid">
+                <div class="feature-card lang-ja">
+                    <h3>Thunderbird の言語に合わせる</h3>
+                    <p>日本語の Thunderbird では日本語、それ以外では英語の画面になります。設定や完了ダイアログも同じです。</p>
+                </div>
+                <div class="feature-card lang-en">
+                    <h3>Follows Thunderbird’s language</h3>
+                    <p>Japanese Thunderbird gets Japanese UI. Other locales get English, including options and the finish dialog.</p>
+                </div>
+                <div class="feature-card lang-ja">
+                    <h3>通信はしません</h3>
+                    <p>メールとファイルは手元のディスクにだけ書きます。外部へ送信する処理はありません。プライバシーポリシーは不要です。</p>
+                </div>
+                <div class="feature-card lang-en">
+                    <h3>No network calls</h3>
+                    <p>Mail and files stay on your disk. Nothing is sent out, so there is no privacy policy page to host.</p>
+                </div>
+                <div class="feature-card lang-ja">
+                    <h3>Thunderbird 115 以降</h3>
+                    <p>保存先へ直接書くため Experiment API を使っています。アドオンは公式サイトの署名済み配布を使ってください。</p>
+                </div>
+                <div class="feature-card lang-en">
+                    <h3>Thunderbird 115+</h3>
+                    <p>An Experiment API writes to the chosen folder. Install the signed build from Thunderbird Add-ons.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="install-section" id="install">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-ja">インストールしてください。</span>
+                <span class="lang-en">Install</span>
+            </h2>
+            <p class="section-lead lang-ja">いまは Thunderbird アドオンの審査中です。公開後、下の手順で入れられます。Thunderbird 115 以降。状況は GitHub の Issues で確認できます。</p>
+            <p class="section-lead lang-en">The add-on is in Thunderbird review. After it lists, use the steps below. Requires Thunderbird 115 or later. Check GitHub Issues for status.</p>
+            <div class="install-grid">
+                <div class="install-card install-card-primary">
+                    <h3 class="lang-ja">いま見られるもの</h3>
+                    <h3 class="lang-en">What you can open now</h3>
+                    <p class="lang-ja">ソースと Issues は GitHub にあります。公式サイトへのリンクは、公開後にここに置きます。</p>
+                    <p class="lang-en">Source and Issues are on GitHub. The official listing link will go here when it ships.</p>
+                    <a class="btn-download lang-ja" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">GitHub を開く</a>
+                    <a class="btn-download lang-en" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">Open GitHub</a>
+                    <p class="install-note lang-ja">有料ではありません。審査が終わると署名済みで配布します。</p>
+                    <p class="install-note lang-en">Free. A signed build will ship after review.</p>
+                </div>
+                <div class="install-card">
+                    <h3 class="lang-ja">Thunderbird の中から入れる（おすすめ）</h3>
+                    <h3 class="lang-en">Install from Thunderbird (recommended)</h3>
+                    <ol class="lang-ja">
+                        <li><strong>ツール → アドオンとテーマ</strong> を開く</li>
+                        <li>右上の検索に <strong>Mail Note Copy</strong> と入れる</li>
+                        <li><strong>Thunderbird へ追加</strong> を選ぶ</li>
+                    </ol>
+                    <ol class="lang-en">
+                        <li>Open <strong>Tools → Add-ons and Themes</strong></li>
+                        <li>Search for <strong>Mail Note Copy</strong></li>
+                        <li>Choose <strong>Add to Thunderbird</strong></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-ja">よくある質問</span>
+                <span class="lang-en">Questions</span>
+            </h2>
+            <details>
+                <summary><span class="lang-ja">今開いているフォルダへ、確認なしで保存しますか？</span><span class="lang-en">Does it silently save into the current Obsidian folder?</span></summary>
+                <p class="lang-ja">しません。毎回、パスが見える画面で場所を選びます。今の場所は候補のひとつです。</p>
+                <p class="lang-en">No. You always pick a visible path. The current folder is only one of the choices.</p>
+            </details>
+            <details>
+                <summary><span class="lang-ja">複数のメールを一度に保存できますか？</span><span class="lang-en">Can I save several messages at once?</span></summary>
+                <p class="lang-ja">1.0.0 は先頭の 1 通だけです。複数保存が必要なら GitHub の Issues に書いてください。</p>
+                <p class="lang-en">1.0.0 saves the first message only. Ask on GitHub Issues if you need bulk save.</p>
+            </details>
+            <details>
+                <summary><span class="lang-ja">添付のファイル名はプロパティにあるのに、実ファイルが無いことがありますか？</span><span class="lang-en">Can the properties list a file that was not written?</span></summary>
+                <p class="lang-ja">「添付も保存」を選んでください。ノート保存だけだと、名前はプロパティに残ってもファイルは置きません。</p>
+                <p class="lang-en">Use “Save with attachments”. Note-only save can list names in properties without writing the files.</p>
+            </details>
+            <details>
+                <summary><span class="lang-ja">サポートはどこですか？</span><span class="lang-en">Where is support?</span></summary>
+                <p class="lang-ja"><a href="https://github.com/crossbeat461-a11y/mail-note-copy/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a> へどうぞ。ソースは同じリポジトリにあります。</p>
+                <p class="lang-en">Use <a href="https://github.com/crossbeat461-a11y/mail-note-copy/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>. Source lives in the same repository.</p>
+            </details>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="cta-area">
+                <h2 class="lang-ja">保存ダイアログで指定してObsidianへ保存</h2>
+                <h2 class="lang-en">Specify it in the save dialog and save to Obsidian</h2>
+                <p class="lang-ja">Mail Note Copy は、メールを Obsidian の Markdown として残すための Thunderbird アドオンです。</p>
+                <p class="lang-en">Mail Note Copy is a Thunderbird add-on that keeps mail as Obsidian Markdown.</p>
+                <p style="margin-top:18px">
+                    <a class="btn-primary lang-ja" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">GitHub を見る</a>
+                    <a class="btn-primary lang-en" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>
+                <a class="sns-icon" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="sns-icon" href="https://github.com/crossbeat461-a11y/mail-note-copy/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+                <a class="sns-icon" href="https://buymeacoffee.com/k_tech_studio" target="_blank" rel="noopener noreferrer">☕ Buy Me a Coffee</a>
+                <a class="sns-icon" href="https://k-tech-lab.vercel.app/" target="_blank" rel="noopener noreferrer">K-Tech Studio</a>
+            </p>
+            <p>
+                <a href="https://buymeacoffee.com/k_tech_studio" target="_blank" rel="noopener noreferrer">
+                    <img class="bmc-img" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" loading="lazy" decoding="async">
+                </a>
+            </p>
+            <p>Mail Note Copy · MPL-2.0 · Thunderbird 115+</p>
+            <p><button type="button" class="btn-inline" onclick="document.getElementById('policy-box').style.display='block'">Privacy</button></p>
+            <div id="policy-box">
+                <p class="lang-ja">このアドオンはインターネットへ通信しません。メール本文・ヘッダ・添付は、選んだフォルダへだけ書き込みます。このランディングページは閲覧計測のために Google Analytics を使うことがあります。</p>
+                <p class="lang-en">The add-on does not talk to the network. Message headers, body, and attachments are written only to the folder you choose. This landing page may use Google Analytics for page views.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+      function setLang(lang) {
+        document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
+        document.getElementById('btn-ja').classList.toggle('active', lang !== 'en');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        try { localStorage.setItem('mnc-lang', lang); } catch (e) {}
+      }
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem('mnc-lang'); } catch (e) {}
+        if (saved === 'en' || saved === 'ja') setLang(saved);
+      })();
+    </script>
+</body>
+</html>

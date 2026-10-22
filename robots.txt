@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mail-note-copy-lp.vercel.app/sitemap.xml
