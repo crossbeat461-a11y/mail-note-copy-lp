@@ -141,18 +141,56 @@
         html[lang="en"] a.lang-en { display: inline-block !important; }
         html[lang="en"] img.lang-en,
         html[lang="en"] pre.lang-en { display: block !important; }
+        html { scroll-padding-top: 72px; }
+
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.94);
+            border-bottom: 1px solid var(--tb-line);
+            backdrop-filter: blur(8px);
+        }
+        .site-brand {
+            color: var(--tb-nav);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.88rem;
+            white-space: nowrap;
+        }
+        .site-brand:hover { color: var(--tb-blue); }
+        .site-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px 14px;
+            flex: 1;
+            min-width: 0;
+        }
+        .site-nav a {
+            color: var(--tb-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .site-nav a:hover { color: var(--tb-nav); }
 
         .lang-switch {
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            z-index: 20;
             display: flex;
             gap: 4px;
             background: var(--white);
             border: 1px solid var(--tb-line);
             border-radius: 8px;
             padding: 4px;
+            margin-left: auto;
+            flex-shrink: 0;
         }
         .lang-btn {
             border: 0;
@@ -166,7 +204,7 @@
         .lang-btn.active { background: var(--tb-nav); color: #fff; }
 
         .hero {
-            padding: 88px 0 56px;
+            padding: 104px 0 56px;
             background: linear-gradient(180deg, #E7F0FF 0%, var(--bg-base) 100%);
         }
         .hero-grid {
@@ -472,14 +510,27 @@
             .hero-grid, .split, .feature-grid, .use-grid, .install-grid { grid-template-columns: 1fr; }
             .hero-copy h1 { font-size: 2rem; }
             .tb-body { grid-template-columns: 1fr; }
+            .site-nav .nav-extra { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="lang-switch">
-        <button type="button" onclick="setLang('ja')" id="btn-ja" class="lang-btn active">JP</button>
-        <button type="button" onclick="setLang('en')" id="btn-en" class="lang-btn">EN</button>
-    </div>
+    <header class="site-header">
+        <a class="site-brand" href="https://k-tech-lab.vercel.app/" target="_blank" rel="noopener noreferrer">K-Tech Studio</a>
+        <nav class="site-nav" aria-label="目次">
+            <a href="#features"><span class="lang-ja">概要</span><span class="lang-en">Overview</span></a>
+            <a href="#steps"><span class="lang-ja">STEP</span><span class="lang-en">Steps</span></a>
+            <a href="#destinations"><span class="lang-ja">保存先</span><span class="lang-en">Folders</span></a>
+            <a href="#howto"><span class="lang-ja">使い方</span><span class="lang-en">How to</span></a>
+            <a class="nav-extra" href="#detail"><span class="lang-ja">詳しく</span><span class="lang-en">Details</span></a>
+            <a href="#install"><span class="lang-ja">インストール</span><span class="lang-en">Install</span></a>
+            <a href="#faq"><span class="lang-ja">FAQ</span><span class="lang-en">FAQ</span></a>
+        </nav>
+        <div class="lang-switch">
+            <button type="button" onclick="setLang('ja')" id="btn-ja" class="lang-btn active">JP</button>
+            <button type="button" onclick="setLang('en')" id="btn-en" class="lang-btn">EN</button>
+        </div>
+    </header>
 
     <header class="hero">
         <div class="container hero-grid">
@@ -554,7 +605,7 @@
         </div>
     </header>
 
-    <section>
+    <section id="features">
         <div class="container">
             <h2 class="section-title">
                 <span class="lang-ja">メール 1 通が、そのまま 1 ノートになる</span>
@@ -600,7 +651,7 @@
         </div>
     </section>
 
-    <section>
+    <section id="steps">
         <div class="container">
             <h2 class="section-title">
                 <span class="lang-ja">使い方は簡単。3つのSTEP</span>
@@ -615,7 +666,7 @@
         </div>
     </section>
 
-    <section>
+    <section id="destinations">
         <div class="container split">
             <div>
                 <h2 class="section-title">
@@ -695,7 +746,7 @@
         </div>
     </section>
 
-    <section>
+    <section id="howto">
         <div class="container">
             <h2 class="section-title">
                 <span class="lang-ja">使い方</span>
@@ -730,7 +781,7 @@
         </div>
     </section>
 
-    <section>
+    <section id="detail">
         <div class="container">
             <h2 class="section-title">
                 <span class="lang-ja">もう少し詳しく</span>
@@ -802,7 +853,7 @@
         </div>
     </section>
 
-    <section class="faq">
+    <section class="faq" id="faq">
         <div class="container">
             <h2 class="section-title">
                 <span class="lang-ja">よくある質問</span>
