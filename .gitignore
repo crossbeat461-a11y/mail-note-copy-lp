@@ -12,3 +12,8 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+
+# Page uses images/*-ja.png and images/*-en.png
+images/dest.svg
+images/flow.svg
+images/properties.svg
