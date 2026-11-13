@@ -40,7 +40,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mail Note Copy | Thunderbird のメールを Obsidian の Markdown に</title>
-    <meta name="description" content="Mail Note Copy は Thunderbird アドオン。メールを日付_件名.md として保存し、プロパティ・本文・添付を残します。保存先のパスを見てから選べ、固定フォルダで別 Vault にも送れます。">
+    <meta name="description" content="Mail Note Copy は Thunderbird アドオン。選んだメール 1 通を Markdown ノートとして保存します。場所は保存ダイアログで選びます。本文のコピーと添付の保存もできます。">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="author" content="K-Tech Studio">
     <meta name="theme-color" content="#0060DF">
@@ -53,7 +53,7 @@
     <meta property="og:site_name" content="K-Tech Studio">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Mail Note Copy | Thunderbird → Obsidian Markdown">
-    <meta property="og:description" content="Save a Thunderbird message as a Markdown note with YAML properties, body, and attachments. Pick a visible destination, including other vaults.">
+    <meta property="og:description" content="Save one selected Thunderbird message as a Markdown note. Choose the folder in the save dialog. Copy the body, or save attachments too.">
     <meta property="og:url" content="https://mail-note-copy-lp.vercel.app/">
     <meta property="og:image" content="https://mail-note-copy-lp.vercel.app/images/icon.png">
     <meta property="og:image:alt" content="Mail Note Copy">
@@ -62,7 +62,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@K_Tech_Dev">
     <meta name="twitter:title" content="Mail Note Copy | Thunderbird → Obsidian Markdown">
-    <meta name="twitter:description" content="Copy mail into Obsidian as Markdown with properties, body, and attachments. Choose the folder first.">
+    <meta name="twitter:description" content="Save one Thunderbird message as a Markdown note. Pick the folder in the save dialog.">
     <meta name="twitter:image" content="https://mail-note-copy-lp.vercel.app/images/icon.png">
     <script type="application/ld+json">
     {
@@ -89,12 +89,12 @@
           "name": "Mail Note Copy",
           "url": "https://mail-note-copy-lp.vercel.app/",
           "image": "https://mail-note-copy-lp.vercel.app/images/icon.png",
-          "description": "Thunderbird add-on that saves a message as an Obsidian Markdown note with YAML properties, body, and attachments.",
+          "description": "Thunderbird add-on that saves one selected message as a Markdown note. You choose the folder in the save dialog.",
           "applicationCategory": "UtilitiesApplication",
           "operatingSystem": "Thunderbird",
-          "softwareVersion": "1.0.0",
+          "softwareVersion": "1.1.0",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
-          "downloadUrl": "https://addons.thunderbird.net/ja/thunderbird/search/?q=Mail+Note+Copy",
+          "downloadUrl": "https://addons.thunderbird.net/ja/thunderbird/addon/mail-note-copy/",
           "author": { "@id": "https://k-tech-lab.vercel.app/#organization" }
         }
       ]
@@ -228,9 +228,9 @@
         }
         .soon-badge {
             display: inline-block;
-            background: #ffdd00;
-            color: #1a1a1a;
-            border: 1px solid #e0c200;
+            background: #d7f5e3;
+            color: #146c43;
+            border: 1px solid #8fd4ad;
             border-radius: 999px;
             padding: 4px 12px;
             font-size: 0.78rem;
@@ -538,18 +538,19 @@
             <div class="hero-copy">
                 <div class="brand-row">
                     <img src="images/icon.png" alt="Mail Note Copy">
-                    <span class="soon-badge">Coming soon</span>
-                    <span class="addon-badge">Thunderbird Add-on · v1.0.0</span>
+                    <span class="soon-badge lang-ja">公開中</span>
+                    <span class="soon-badge lang-en">Listed</span>
+                    <span class="addon-badge">Thunderbird Add-on · v1.1.0</span>
                 </div>
                 <h1>Mail Note Copy</h1>
-                <p class="lang-ja">メールを Obsidian の Markdown ノートとして保存します。プロパティに差出人・宛先・件名を残し、本文と添付も同じフォルダへ。保存先のパスを見てから選べます。固定フォルダを置けば、別の Vault にも送れます。</p>
-                <p class="lang-en">Save a Thunderbird message as an Obsidian Markdown note. Properties keep from, to, and subject. The body and attachments land in the same folder. You see the path before you save, and pinned folders can point at other vaults.</p>
+                <p class="lang-ja">選んだメール 1 通を、Markdown のノートとして保存します。場所は Thunderbird の保存ダイアログで選びます。本文だけコピーして貼ることもできます。</p>
+                <p class="lang-en">Save one selected email as a Markdown note. Choose the folder in Thunderbird’s save dialog. You can also copy the body and paste it.</p>
                 <div class="hero-actions">
-                    <a class="btn-primary lang-ja" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">GitHub を見る</a>
-                    <a class="btn-primary lang-en" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                    <a class="btn-primary lang-ja" href="https://addons.thunderbird.net/ja/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">アドオンを入れる</a>
+                    <a class="btn-primary lang-en" href="https://addons.thunderbird.net/en-US/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">Get the add-on</a>
                     <a class="btn-secondary" href="#install">
-                        <span class="lang-ja">公開後の入れ方</span>
-                        <span class="lang-en">How to install later</span>
+                        <span class="lang-ja">入れ方</span>
+                        <span class="lang-en">How to install</span>
                     </a>
                 </div>
             </div>
@@ -558,8 +559,8 @@
                 <div class="tb-titlebar">
                     <span class="tb-dots"><i></i><i></i><i></i></span>
                     <span class="tb-tab">Inbox — Thunderbird</span>
-                    <span class="lang-ja">1 通を選んで保存先を見る</span>
-                    <span class="lang-en">Pick 1 message, then see the path</span>
+                    <span class="lang-ja">1 通を選んでノートを保存</span>
+                    <span class="lang-en">Select 1 message, then Save note</span>
                 </div>
                 <div class="tb-body">
                     <div class="tb-threads">
@@ -582,23 +583,26 @@
                     <aside class="tb-addon">
                         <div class="addon-head">Mail Note Copy</div>
                         <div class="dest-row active">
-                            <strong class="lang-ja">仕事 Vault / Inbox</strong>
-                            <strong class="lang-en">Work vault / Inbox</strong>
-                            <code>C:\Notes\Work\Inbox</code>
+                            <strong class="lang-ja">ノートを保存</strong>
+                            <strong class="lang-en">Save note</strong>
+                            <code class="lang-ja">ツールバー右上</code>
+                            <code class="lang-en">Toolbar, top right</code>
                         </div>
                         <div class="dest-row">
-                            <strong class="lang-ja">プライベート Vault</strong>
-                            <strong class="lang-en">Personal vault</strong>
-                            <code>D:\Obsidian\Personal\Mail</code>
+                            <strong class="lang-ja">保存…</strong>
+                            <strong class="lang-en">Save…</strong>
+                            <code class="lang-ja">保存ダイアログで場所を選ぶ</code>
+                            <code class="lang-en">Pick a folder in the save dialog</code>
                         </div>
                         <div class="dest-row">
-                            <strong class="lang-ja">今開いている場所</strong>
-                            <strong class="lang-en">Current Obsidian folder</strong>
-                            <code>C:\Notes\Work\Daily</code>
+                            <strong class="lang-ja">本文をコピー</strong>
+                            <strong class="lang-en">Copy body</strong>
+                            <code class="lang-ja">開いているノートへ貼る</code>
+                            <code class="lang-en">Paste into an open note</code>
                         </div>
                         <button type="button" class="tb-save" tabindex="-1">
-                            <span class="lang-ja">この場所に保存</span>
-                            <span class="lang-en">Save here</span>
+                            <span class="lang-ja">保存…</span>
+                            <span class="lang-en">Save…</span>
                         </button>
                     </aside>
                 </div>
@@ -640,12 +644,12 @@
                 <div class="feature-card">
                     <div class="feature-icon">📁</div>
                     <div class="lang-ja">
-                        <h3>保存先を見てから選ぶ</h3>
-                        <p>今開いている Vault、最近使った場所、固定したフォルダ。パスが見えるので、別 Vault にも迷わず送れます。</p>
+                        <h3>保存ダイアログで場所を選ぶ</h3>
+                        <p>固定フォルダの一覧はありません。保存のたびに、Thunderbird の保存ダイアログで場所と名前を決めます。OS が直前のフォルダを覚えていることがあります。</p>
                     </div>
                     <div class="lang-en">
-                        <h3>See the path, then choose</h3>
-                        <p>Current Obsidian folder, recents, and pins. Paths stay visible, so other vaults are first-class destinations.</p>
+                        <h3>Choose the folder in the save dialog</h3>
+                        <p>There is no pinned folder list. Each save uses Thunderbird’s save dialog. The OS often remembers the last folder.</p>
                     </div>
                 </div>
             </div>
@@ -671,35 +675,35 @@
         <div class="container split">
             <div>
                 <h2 class="section-title">
-                    <span class="lang-ja">保存先は複数。Vault も複数。</span>
-                    <span class="lang-en">Several destinations. Several vaults.</span>
+                    <span class="lang-ja">場所は、その都度選びます。</span>
+                    <span class="lang-en">You choose the folder each time.</span>
                 </h2>
                 <div class="lang-ja">
-                    <p class="section-lead">仕事用と個人用で Vault が分かれていても、設定にフルパスを指定できます。保存のたびに深いフォルダを辿り直す煩わしさはありません。</p>
+                    <p class="section-lead">仕事用と個人用で Vault が分かれていても、保存ダイアログでそのフォルダを選べば足ります。アドオンがフォルダを覚えたり、Obsidian を探したりはしません。</p>
                     <ul>
-                        <li><strong>固定フォルダ</strong>（最大 16）… よく使う Inbox や Mail フォルダ。名前を付けて並べ替えできます。</li>
-                        <li><strong>今開いている場所</strong>… Obsidian が最後に見ていたフォルダを検出します。</li>
-                        <li><strong>最近使った場所</strong>（最大 8）… さっき保存したフォルダが残ります。</li>
-                        <li><strong>参照して選ぶ</strong>… その場で別のフォルダを指定できます。</li>
+                        <li><strong>ツールバー</strong>… 右上の「ノートを保存」がいちばんよく使う入口です。</li>
+                        <li><strong>右クリック</strong>… 「本文をコピー」「ノートを保存」「ノートと添付を保存」。</li>
+                        <li><strong>保存…</strong>… Thunderbird の保存ダイアログで場所と名前を決めます。</li>
+                        <li><strong>本文をコピー</strong>… Markdown をクリップボードへ入れ、今開いているノートへ貼ります。</li>
                     </ul>
-                    <p>固定フォルダはオプションです。最初は最近使った場所だけでも使えます。メニューの「保存先を管理…」から追加・改名・削除できます。</p>
+                    <p>添付もあるメールは、確認画面で添付の保存を選べます。本文のあと、ファイルごとに保存ダイアログが出ます。</p>
                 </div>
                 <div class="lang-en">
-                    <p class="section-lead">Work and personal vaults can each have a full path in settings. You do not have to walk a deep tree every time you save.</p>
+                    <p class="section-lead">Work and personal vaults are just folders. Pick them in the save dialog. The add-on does not remember a folder list or look for Obsidian.</p>
                     <ul>
-                        <li><strong>Pinned folders</strong> (up to 16) — Inbox or Mail folders you reuse, with your own labels.</li>
-                        <li><strong>Current folder</strong> — the folder Obsidian last had open.</li>
-                        <li><strong>Recents</strong> (up to 8) — the last places you saved to.</li>
-                        <li><strong>Browse</strong> — pick any other folder on the spot.</li>
+                        <li><strong>Toolbar</strong> — Save note on the right is the main entry point.</li>
+                        <li><strong>Right-click</strong> — Copy body, Save note, or Save note and attachments.</li>
+                        <li><strong>Save…</strong> — pick the folder and name in Thunderbird’s save dialog.</li>
+                        <li><strong>Copy body</strong> — puts Markdown on the clipboard so you can paste into an open note.</li>
                     </ul>
-                    <p>Pins are optional. Recents are enough to start. Add, rename, or remove pins from “Manage destinations…”.</p>
+                    <p>If the message has attachments, turn that on in the confirmation window. After the note, a save dialog appears for each file.</p>
                 </div>
             </div>
             <figure class="figure">
-                <img class="lang-ja" src="images/dest-ja.png" width="420" height="380" alt="保存先ピッカー">
-                <img class="lang-en" src="images/dest-en.png" width="420" height="380" alt="Destination picker">
-                <figcaption class="lang-ja">パスがそのまま見えるので、どの Vault に入るか迷いません。</figcaption>
-                <figcaption class="lang-en">The full path stays visible, so you know which vault you are writing to.</figcaption>
+                <img class="lang-ja" src="images/listing-save-dialog-ja.png" width="420" height="348" alt="ツールバーのノートを保存と、確認画面の保存">
+                <img class="lang-en" src="images/listing-save-dialog-en.png" width="420" height="348" alt="Save note on the toolbar and Save in the confirmation window">
+                <figcaption class="lang-ja">1 がツールバーの「ノートを保存」。2 が確認画面の「保存…」です。</figcaption>
+                <figcaption class="lang-en">1 is Save note on the toolbar. 2 is Save… in the confirmation window.</figcaption>
             </figure>
         </div>
     </section>
@@ -756,27 +760,27 @@
             <div class="use-grid howto">
                 <div class="use-card lang-ja">
                     <h3>1. メールを 1 通選ぶ</h3>
-                    <p>一覧または表示中のメールで右クリックします。いまは先頭の 1 通だけを保存します。複数選択の一括保存はこれから対応予定です。</p>
+                    <p>一覧または表示中のメールで 1 通選びます。複数通の一括保存はありません。</p>
                 </div>
                 <div class="use-card lang-en">
                     <h3>1. Select one message</h3>
-                    <p>Right-click in the list or the open message. Version 1.0.0 saves the first selected message. Bulk save is planned.</p>
+                    <p>Display the message, or select one in the list. Version 1.1.0 does not save several messages at once.</p>
                 </div>
                 <div class="use-card lang-ja">
-                    <h3>2. メニューを選ぶ</h3>
-                    <p><span class="kbd">本文をコピー</span>はクリップボードへ。<span class="kbd">保存先を選んで保存</span>はノートだけ。<span class="kbd">添付も保存</span>は同じフォルダに添付ファイルも保存します。</p>
+                    <h3>2. 「ノートを保存」を押す</h3>
+                    <p>ツールバー右上の <span class="kbd">ノートを保存</span> が入口です。右クリックの <span class="kbd">本文をコピー</span>、<span class="kbd">ノートを保存</span>、<span class="kbd">ノートと添付を保存</span> でも同じ操作ができます。</p>
                 </div>
                 <div class="use-card lang-en">
-                    <h3>2. Pick a menu</h3>
-                    <p><span class="kbd">Copy body</span> goes to the clipboard. <span class="kbd">Save with destination</span> writes the note. <span class="kbd">Save with attachments</span> also saves the attachment files in the same folder.</p>
+                    <h3>2. Click Save note</h3>
+                    <p>The <span class="kbd">Save note</span> button on the right of the toolbar is the main entry. Right-click also has <span class="kbd">Copy body</span>, <span class="kbd">Save note</span>, and <span class="kbd">Save note and attachments</span>.</p>
                 </div>
                 <div class="use-card lang-ja">
-                    <h3>3. 保存ダイアログを見て保存する</h3>
-                    <p>固定・今の場所・最近・参照の順に並びます。選んだフォルダに <code>日付_件名.md</code> ができ、添付メニューならファイルと <code>## 添付</code> のリンクが付きます。一度設定すると次から自動表示されています。</p>
+                    <h3>3. 保存するか、コピーする</h3>
+                    <p>確認画面の <span class="kbd">保存…</span> で場所と名前を決め、<code>日付_件名.md</code> を置きます。<span class="kbd">本文をコピー</span>ならクリップボードへ入れます。添付を選んだ場合は、ファイルごとに保存ダイアログが出ます。</p>
                 </div>
                 <div class="use-card lang-en">
-                    <h3>3. See the save dialog, then save</h3>
-                    <p>Pins, current folder, recents, then browse. The note is <code>date_subject.md</code>. Attachment mode adds files and a <code>## Attachments</code> list. After you set them once, they show up automatically next time.</p>
+                    <h3>3. Save or copy</h3>
+                    <p><span class="kbd">Save…</span> opens the save dialog for <code>date_subject.md</code>. <span class="kbd">Copy body</span> puts Markdown on the clipboard. If you save attachments, a dialog appears for each file.</p>
                 </div>
             </div>
         </div>
@@ -807,11 +811,11 @@
                 </div>
                 <div class="feature-card lang-ja">
                     <h3>Thunderbird 115 以降</h3>
-                    <p>保存先へ直接書くため Experiment API を使っています。アドオンは公式サイトの署名済み配布を使ってください。</p>
+                    <p>1.1.0 は Experiment API を使いません。保存は Thunderbird の保存ダイアログです。公式ストアの署名済みを入れてください。</p>
                 </div>
                 <div class="feature-card lang-en">
                     <h3>Thunderbird 115+</h3>
-                    <p>An Experiment API writes to the chosen folder. Install the signed build from Thunderbird Add-ons.</p>
+                    <p>1.1.0 does not use an Experiment API. Saving uses Thunderbird’s save dialog. Install the signed build from Thunderbird Add-ons.</p>
                 </div>
             </div>
         </div>
@@ -820,21 +824,21 @@
     <section class="install-section" id="install">
         <div class="container">
             <h2 class="section-title">
-                <span class="lang-ja">インストールしてください。</span>
+                <span class="lang-ja">インストール</span>
                 <span class="lang-en">Install</span>
             </h2>
-            <p class="section-lead lang-ja">いまは Thunderbird アドオンの審査中です。公開後、下の手順で入れられます。Thunderbird 115 以降。状況は GitHub の Issues で確認できます。</p>
-            <p class="section-lead lang-en">The add-on is in Thunderbird review. After it lists, use the steps below. Requires Thunderbird 115 or later. Check GitHub Issues for status.</p>
+            <p class="section-lead lang-ja">Thunderbird アドオンストアに載っています。Thunderbird 115 以降。不具合は GitHub の Issues へどうぞ。</p>
+            <p class="section-lead lang-en">It is listed on Thunderbird Add-ons. Requires Thunderbird 115 or later. Use GitHub Issues for problems.</p>
             <div class="install-grid">
                 <div class="install-card install-card-primary">
-                    <h3 class="lang-ja">いま見られるもの</h3>
-                    <h3 class="lang-en">What you can open now</h3>
-                    <p class="lang-ja">ソースと Issues は GitHub にあります。公式サイトへのリンクは、公開後にここに置きます。</p>
-                    <p class="lang-en">Source and Issues are on GitHub. The official listing link will go here when it ships.</p>
-                    <a class="btn-download lang-ja" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">GitHub を開く</a>
-                    <a class="btn-download lang-en" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">Open GitHub</a>
-                    <p class="install-note lang-ja">有料ではありません。審査が終わると署名済みで配布します。</p>
-                    <p class="install-note lang-en">Free. A signed build will ship after review.</p>
+                    <h3 class="lang-ja">公式ストアから入れる</h3>
+                    <h3 class="lang-en">Install from Thunderbird Add-ons</h3>
+                    <p class="lang-ja">審査は通っています。ストアのページから Thunderbird へ追加できます。無料です。</p>
+                    <p class="lang-en">Review is complete. Add it from the listing. It is free.</p>
+                    <a class="btn-download lang-ja" href="https://addons.thunderbird.net/ja/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">アドオンストアを開く</a>
+                    <a class="btn-download lang-en" href="https://addons.thunderbird.net/en-US/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">Open Thunderbird Add-ons</a>
+                    <p class="install-note lang-ja">ソースは GitHub にあります。</p>
+                    <p class="install-note lang-en">Source is on GitHub.</p>
                 </div>
                 <div class="install-card">
                     <h3 class="lang-ja">Thunderbird の中から入れる（おすすめ）</h3>
@@ -862,18 +866,18 @@
             </h2>
             <details>
                 <summary><span class="lang-ja">今開いているフォルダへ、確認なしで保存しますか？</span><span class="lang-en">Does it silently save into the current Obsidian folder?</span></summary>
-                <p class="lang-ja">しません。毎回、パスが見える画面で場所を選びます。今の場所は候補のひとつです。</p>
-                <p class="lang-en">No. You always pick a visible path. The current folder is only one of the choices.</p>
+                <p class="lang-ja">しません。毎回、Thunderbird の保存ダイアログで場所を選びます。OS が直前のフォルダを覚えることはあります。</p>
+                <p class="lang-en">No. You pick the folder in Thunderbird’s save dialog each time. The OS often remembers the last folder.</p>
             </details>
             <details>
                 <summary><span class="lang-ja">複数のメールを一度に保存できますか？</span><span class="lang-en">Can I save several messages at once?</span></summary>
-                <p class="lang-ja">1.0.0 は先頭の 1 通だけです。複数保存が必要なら GitHub の Issues に書いてください。</p>
-                <p class="lang-en">1.0.0 saves the first message only. Ask on GitHub Issues if you need bulk save.</p>
+                <p class="lang-ja">1.1.0 は 1 通だけです。複数保存が必要なら GitHub の Issues に書いてください。</p>
+                <p class="lang-en">1.1.0 saves one message only. Ask on GitHub Issues if you need bulk save.</p>
             </details>
             <details>
                 <summary><span class="lang-ja">添付のファイル名はプロパティにあるのに、実ファイルが無いことがありますか？</span><span class="lang-en">Can the properties list a file that was not written?</span></summary>
-                <p class="lang-ja">「添付も保存」を選んでください。ノート保存だけだと、名前はプロパティに残ってもファイルは置きません。</p>
-                <p class="lang-en">Use “Save with attachments”. Note-only save can list names in properties without writing the files.</p>
+                <p class="lang-ja">確認画面で添付の保存を選んでください。ノートだけ保存すると、名前はプロパティに残ってもファイルは置きません。</p>
+                <p class="lang-en">Turn on attachment saving in the confirmation window. Note-only save can list names in properties without writing the files.</p>
             </details>
             <details>
                 <summary><span class="lang-ja">サポートはどこですか？</span><span class="lang-en">Where is support?</span></summary>
@@ -891,8 +895,8 @@
                 <p class="lang-ja">Mail Note Copy は、メールを Obsidian の Markdown として残すための Thunderbird アドオンです。</p>
                 <p class="lang-en">Mail Note Copy is a Thunderbird add-on that keeps mail as Obsidian Markdown.</p>
                 <p style="margin-top:18px">
-                    <a class="btn-primary lang-ja" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">GitHub を見る</a>
-                    <a class="btn-primary lang-en" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                    <a class="btn-primary lang-ja" href="https://addons.thunderbird.net/ja/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">アドオンを入れる</a>
+                    <a class="btn-primary lang-en" href="https://addons.thunderbird.net/en-US/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">Get the add-on</a>
                 </p>
             </div>
         </div>
@@ -901,6 +905,8 @@
     <footer>
         <div class="container">
             <p>
+                <a class="sns-icon lang-ja" href="https://addons.thunderbird.net/ja/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">アドオン</a>
+                <a class="sns-icon lang-en" href="https://addons.thunderbird.net/en-US/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">Add-on</a>
                 <a class="sns-icon" href="https://github.com/crossbeat461-a11y/mail-note-copy" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <a class="sns-icon" href="https://github.com/crossbeat461-a11y/mail-note-copy/issues" target="_blank" rel="noopener noreferrer">Issues</a>
                 <a class="sns-icon" href="https://buymeacoffee.com/k_tech_studio" target="_blank" rel="noopener noreferrer">☕ Buy Me a Coffee</a>
