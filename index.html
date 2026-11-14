@@ -39,8 +39,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mail Note Copy | Thunderbird のメールを Obsidian の Markdown に</title>
-    <meta name="description" content="Mail Note Copy は Thunderbird アドオン。選んだメール 1 通を Markdown ノートとして保存します。場所は保存ダイアログで選びます。本文のコピーと添付の保存もできます。">
+    <title>Mail Note Copy | Thunderbird のメールを Obsidian の Markdown に保存するアドオン</title>
+    <meta name="description" content="Thunderbird アドオン。選んだメール 1 通を Obsidian 向け Markdown ノートとして保存します。保存先はダイアログで選び、本文コピーと添付の保存もできます。">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="author" content="K-Tech Studio">
     <meta name="theme-color" content="#0060DF">
@@ -52,18 +52,22 @@
     <link rel="sitemap" type="application/xml" href="https://mail-note-copy-lp.vercel.app/sitemap.xml">
     <meta property="og:site_name" content="K-Tech Studio">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Mail Note Copy | Thunderbird → Obsidian Markdown">
-    <meta property="og:description" content="Save one selected Thunderbird message as a Markdown note. Choose the folder in the save dialog. Copy the body, or save attachments too.">
+    <meta property="og:title" content="Mail Note Copy | Thunderbird のメールを Obsidian の Markdown に保存するアドオン">
+    <meta property="og:description" content="Thunderbird アドオン。選んだメール 1 通を Obsidian 向け Markdown ノートとして保存します。保存先はダイアログで選びます。">
     <meta property="og:url" content="https://mail-note-copy-lp.vercel.app/">
-    <meta property="og:image" content="https://mail-note-copy-lp.vercel.app/images/icon.png">
-    <meta property="og:image:alt" content="Mail Note Copy">
+    <meta property="og:image" content="https://mail-note-copy-lp.vercel.app/og.svg">
+    <meta property="og:image:type" content="image/svg+xml">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mail Note Copy — Thunderbird email to Obsidian Markdown">
     <meta property="og:locale" content="ja_JP">
     <meta property="og:locale:alternate" content="en_US">
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@K_Tech_Dev">
-    <meta name="twitter:title" content="Mail Note Copy | Thunderbird → Obsidian Markdown">
-    <meta name="twitter:description" content="Save one Thunderbird message as a Markdown note. Pick the folder in the save dialog.">
-    <meta name="twitter:image" content="https://mail-note-copy-lp.vercel.app/images/icon.png">
+    <meta name="twitter:title" content="Mail Note Copy | Save Thunderbird email as Obsidian Markdown">
+    <meta name="twitter:description" content="Thunderbird add-on that saves one selected email as a Markdown note for Obsidian. Choose the folder in the save dialog.">
+    <meta name="twitter:image" content="https://mail-note-copy-lp.vercel.app/og.svg">
+    <meta name="twitter:image:alt" content="Mail Note Copy — Thunderbird email to Obsidian Markdown">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -80,16 +84,17 @@
           "@id": "https://mail-note-copy-lp.vercel.app/#website",
           "url": "https://mail-note-copy-lp.vercel.app/",
           "name": "Mail Note Copy",
-          "inLanguage": "ja",
+          "inLanguage": ["ja", "en"],
           "publisher": { "@id": "https://k-tech-lab.vercel.app/#organization" }
         },
         {
           "@type": "SoftwareApplication",
           "@id": "https://mail-note-copy-lp.vercel.app/#app",
           "name": "Mail Note Copy",
+          "alternateName": ["メールノートコピー", "Thunderbird Obsidian Markdown"],
           "url": "https://mail-note-copy-lp.vercel.app/",
-          "image": "https://mail-note-copy-lp.vercel.app/images/icon.png",
-          "description": "Thunderbird add-on that saves one selected message as a Markdown note. You choose the folder in the save dialog.",
+          "image": "https://mail-note-copy-lp.vercel.app/og.svg",
+          "description": "選んだ Thunderbird のメールを Obsidian 用の Markdown ノートとして保存するアドオン。保存先はダイアログで選び、本文コピーと添付の保存もできます。",
           "applicationCategory": "UtilitiesApplication",
           "operatingSystem": "Thunderbird",
           "softwareVersion": "1.1.0",
@@ -543,8 +548,8 @@
                     <span class="addon-badge">Thunderbird Add-on · v1.1.0</span>
                 </div>
                 <h1>Mail Note Copy</h1>
-                <p class="lang-ja">選んだメール 1 通を、Markdown のノートとして保存します。場所は Thunderbird の保存ダイアログで選びます。本文だけコピーして貼ることもできます。</p>
-                <p class="lang-en">Save one selected email as a Markdown note. Choose the folder in Thunderbird’s save dialog. You can also copy the body and paste it.</p>
+                <p class="lang-ja"><strong>Thunderbird</strong> のメールを <strong>Obsidian</strong> 向けの Markdown ノートに保存するアドオンです。選んだ 1 通を保存し、場所は Thunderbird の保存ダイアログで選びます。本文だけコピーして貼ることもできます。</p>
+                <p class="lang-en">A <strong>Thunderbird</strong> add-on that saves one selected email as an <strong>Obsidian</strong> Markdown note. Choose the folder in Thunderbird’s save dialog. You can also copy the body and paste it.</p>
                 <div class="hero-actions">
                     <a class="btn-primary lang-ja" href="https://addons.thunderbird.net/ja/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">アドオンを入れる</a>
                     <a class="btn-primary lang-en" href="https://addons.thunderbird.net/en-US/thunderbird/addon/mail-note-copy/" target="_blank" rel="noopener noreferrer">Get the add-on</a>
